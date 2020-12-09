@@ -1,0 +1,20 @@
+type Post implements Node {
+  id: ID!
+  slug: String!
+  description: String!
+  author: Author @link(from: "author" by: "name")
+}
+
+type Tip implements Node {
+  id: ID!
+  slug: String!
+  description: String!
+  author: Author @link(from: "author" by: "name")
+}
+
+type Author implements Node {
+  id: ID!
+  name: String!
+  posts: [Post] @link(by: "author.name", from: "name")
+  tips: [Tip] @link(by: "author.name", from: "name")
+}

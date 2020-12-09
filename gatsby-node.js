@@ -1,5 +1,7 @@
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const fs = require(`fs`)
 const path = require(`path`)
+
+const { createFilePath } = require(`gatsby-source-filesystem`)
 
 const POST_NODE_TYPE = `Post`
 const TIP_NODE_TYPE = `Tip`
@@ -7,25 +9,11 @@ const AUTHOR_NODE_TYPE = `Author`
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
-  createTypes(`
-    type Post implements Node {
-      id: ID!
-      slug: String!
-      description: String!
-      author: Author @link(from: "author" by: "name")
-    }
-    type Tip implements Node {
-      id: ID!
-      slug: String!
-      description: String!
-      author: Author @link(from: "author" by: "name")
-    }
-    type Author implements Node {
-      id: ID!
-      name: String!
-      posts: [Post] @link(by: "author.name", from: "name")
-      tips: [Tip] @link(by: "author.name", from: "name")
-    }`)
+  const fullFn = path.join(__dirname, `./types.graphql`)
+  const coreTypes = fs.readFileSync(`${fullFn}`, {
+    encoding: `utf-8`
+  })
+  createTypes(coreTypes)
 }
 
 exports.sourceNodes = async ({
