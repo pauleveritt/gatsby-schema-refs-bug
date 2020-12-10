@@ -1,18 +1,25 @@
-type Post implements Node {
+interface Resource @nodeInterface {
+    id: ID!
+    author: Author
+}
+
+interface Reference @nodeInterface {
+    id: ID!
+}
+
+type Post implements Node & Resource {
   id: ID!
-  slug: String!
   description: String!
   author: Author @link(from: "author" by: "name")
 }
 
-type Tip implements Node {
+type Tip implements Node & Resource {
   id: ID!
-  slug: String!
   description: String!
   author: Author @link(from: "author" by: "name")
 }
 
-type Author implements Node {
+type Author implements Node & Reference {
   id: ID!
   name: String!
   posts: [Post] @link(by: "author.name", from: "name")
