@@ -44,33 +44,3 @@ exports.onCreateNode = ({
     return resourceNode
   }
 }
-
-// exports.createPages = async ({ graphql, actions }) => {
-//   const { createPage } = actions
-//   return
-//   const result = await graphql(`
-//     query {
-//       allResource {
-//         edges {
-//           node {
-//             fields {
-//               slug
-//             }
-//           }
-//         }
-//       }
-//     }
-//   `)
-//   return
-//   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-//     createPage({
-//       path: node.fields.slug,
-//       component: path.resolve(`./src/templates/tip.jsx`),
-//       context: {
-//         // Data passed to context is available
-//         // in page queries as GraphQL variables.
-//         slug: node.fields.slug
-//       }
-//     })
-//   })
-// }
