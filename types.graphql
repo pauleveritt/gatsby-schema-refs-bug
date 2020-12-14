@@ -1,12 +1,14 @@
 interface Resource @nodeInterface {
     id: ID!
     slug: String!
-    description: String!
+    title: String
+    description: String
     author: Author
 }
 
 interface Reference @nodeInterface {
     id: ID!
+    title: String
     slug: String!
     resources: [Resource]
 }
@@ -14,14 +16,16 @@ interface Reference @nodeInterface {
 type Post implements Node & Resource {
     id: ID!
     slug: String!
-    description: String!
+    title: String
+    description: String
     author: Author @link(from: "author" by: "name")
 }
 
 type Tip implements Node & Resource {
     id: ID!
     slug: String!
-    description: String!
+    title: String
+    description: String
     author: Author @link(from: "author" by: "name")
 }
 
@@ -29,5 +33,6 @@ type Author implements Node & Reference {
     id: ID!
     slug: String!
     name: String!
+    title: String
     resources: [Resource] @link(by: "author.name", from: "name")
 }
