@@ -1,28 +1,33 @@
 interface Resource @nodeInterface {
     id: ID!
+    slug: String!
     description: String!
     author: Author
 }
 
 interface Reference @nodeInterface {
     id: ID!
+    slug: String!
     resources: [Resource]
 }
 
 type Post implements Node & Resource {
-  id: ID!
-  description: String!
-  author: Author @link(from: "author" by: "name")
+    id: ID!
+    slug: String!
+    description: String!
+    author: Author @link(from: "author" by: "name")
 }
 
 type Tip implements Node & Resource {
-  id: ID!
-  description: String!
-  author: Author @link(from: "author" by: "name")
+    id: ID!
+    slug: String!
+    description: String!
+    author: Author @link(from: "author" by: "name")
 }
 
 type Author implements Node & Reference {
-  id: ID!
-  name: String!
-  resources: [Resource] @link(by: "author.name", from: "name")
+    id: ID!
+    slug: String!
+    name: String!
+    resources: [Resource] @link(by: "author.name", from: "name")
 }
