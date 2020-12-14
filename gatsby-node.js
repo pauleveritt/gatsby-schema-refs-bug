@@ -2,8 +2,33 @@ const fs = require(`fs`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 const path = require(`path`)
 
+const parentHtml = (createFieldExtension) => {
+  createFieldExtension({
+    name: `parentHtml`,
+    extend() {
+      return {
+        async resolve(source, args, context, info) {
+          const type = info.schema.getType(`MarkdownRemark`)
+          const markdownNode = context.nodeModel.getNodeById({
+            id: source.parent
+          })
+          const resolver = type.getFields().html.resolve
+          return resolver(markdownNode, {}, context, {
+            fieldName: "html"
+          })
+        }
+      }
+    }
+  })
+}
+
 exports.createSchemaCustomization = ({ actions }) => {
-  const { createTypes } = actions
+  const { createTypes, createFieldExtension } = actions
+
+  // Directives
+  parentHtml(createFieldExtension)
+
+  // Schemas
   const fullFn = path.join(__dirname, `./types.graphql`)
   const coreTypes = fs.readFileSync(`${fullFn}`, {
     encoding: `utf-8`

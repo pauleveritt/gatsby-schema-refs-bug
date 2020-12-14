@@ -3,14 +3,18 @@ interface Resource @nodeInterface {
     slug: String!
     title: String
     description: String
+    html: String
     author: Author
+    parent: Node
 }
 
 interface Reference @nodeInterface {
     id: ID!
-    title: String
     slug: String!
+    title: String
+    html: String
     resources: [Resource]
+    parent: Node
 }
 
 type Post implements Node & Resource {
@@ -18,7 +22,9 @@ type Post implements Node & Resource {
     slug: String!
     title: String
     description: String
+    html: String! @parentHtml
     author: Author @link(from: "author" by: "name")
+    parent: Node
 }
 
 type Tip implements Node & Resource {
@@ -26,7 +32,9 @@ type Tip implements Node & Resource {
     slug: String!
     title: String
     description: String
+    html: String! @parentHtml
     author: Author @link(from: "author" by: "name")
+    parent: Node
 }
 
 type Author implements Node & Reference {
@@ -34,5 +42,7 @@ type Author implements Node & Reference {
     slug: String!
     name: String!
     title: String
+    html: String! @parentHtml
     resources: [Resource] @link(by: "author.name", from: "name")
+    parent: Node
 }
