@@ -23,7 +23,7 @@ type Post implements Node & Resource {
     title: String
     description: String
     html: String! @parentHtml
-    author: Author @link(from: "author" by: "name")
+    author: Author @link(by: "name")
     parent: Node
 }
 
@@ -33,7 +33,7 @@ type Tip implements Node & Resource {
     title: String
     description: String
     html: String! @parentHtml
-    author: Author @link(from: "author" by: "name")
+    author: Author @link(by: "name")
     parent: Node
 }
 
